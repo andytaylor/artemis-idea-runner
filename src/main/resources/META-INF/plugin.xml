@@ -34,11 +34,4 @@
                 id="org.apache.activemq.artemis.idea.artemisidearunner.ArtemisSettingsConfigurable"
                 displayName="Artemis"/>
     </extensions>
-    <actions>
-        <action id="org.apache.activemq.artemis.idea.artemisidearunner.PopupDialogAction"
-                class="org.apache.activemq.artemis.idea.artemisidearunner.PopupDialogAction" text="Configure Artemis"
-                description="Configure Artemis">
-            <add-to-group group-id="ToolsMenu" anchor="first"/>
-        </action>
-    </actions>
 </idea-plugin>

@@ -27,6 +27,10 @@ class ArtemisCommandLineState extends CommandLineState {
       this.artemisRunConfiguration = artemisRunConfiguration;
    }
 
+   private String  getEscapedName() {
+      return artemisRunConfiguration.getName().replace(" ", "-");
+   }
+
    @NotNull
    @Override
    protected ProcessHandler startProcess() throws ExecutionException {
@@ -36,8 +40,8 @@ class ArtemisCommandLineState extends CommandLineState {
          artemisProfilesDir.mkdirs();
       }
 
-      File artemisInstanceDir = new File(artemisProfilesDir, artemisRunConfiguration.getName());
-      File runFile = new File(artemisProfilesDir, artemisRunConfiguration.getName() + ".sh");
+      File artemisInstanceDir = new File(artemisProfilesDir, getEscapedName());
+      File runFile = new File(artemisProfilesDir, getEscapedName() + ".sh");
 
       if (!runFile.exists()) {
          try {
@@ -51,7 +55,9 @@ class ArtemisCommandLineState extends CommandLineState {
 
       sb.append(state.amqInstallationDir + "/bin/artemis ")
             .append("create ")
-            .append(artemisRunConfiguration.getName()).append(" ")
+            .append("--host").append(" ")
+            .append(artemisRunConfiguration.getArtemisHostName()).append(" ")
+            .append(getEscapedName()).append(" ")
             .append("--user").append(" ")
             .append(artemisRunConfiguration.getArtemisUserName()).append(" ")
             .append("--password ")
@@ -64,6 +70,8 @@ class ArtemisCommandLineState extends CommandLineState {
       }
       if(artemisRunConfiguration.getClustered()) {
          sb.append("--clustered ");
+         sb.append("--cluster-user ").append(artemisRunConfiguration.getArtemisUserName()).append(" ");
+         sb.append(("--cluster-password ")).append(artemisRunConfiguration.getArtemisPassword()).append(" ");
       }
       if(artemisRunConfiguration.getBackup()) {
          sb.append("--backup ");

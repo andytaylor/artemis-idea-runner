@@ -16,6 +16,7 @@ public class ArtemisSettingsEditor  extends SettingsEditor<ArtemisRunConfigurati
 
    private final JBCheckBox cleanDataField;
 
+   private final JBTextField artemisHostNameField;
    private final JBTextField artemisUserNameField;
 
    private final JBTextField artemisPasswordField;
@@ -33,6 +34,7 @@ public class ArtemisSettingsEditor  extends SettingsEditor<ArtemisRunConfigurati
 
    public ArtemisSettingsEditor() {
       cleanDataField = new JBCheckBox();
+      artemisHostNameField = new JBTextField();
       artemisUserNameField = new JBTextField();
       artemisPasswordField = new JBTextField();
       artemisAllowAnonField = new JBCheckBox();
@@ -53,7 +55,8 @@ public class ArtemisSettingsEditor  extends SettingsEditor<ArtemisRunConfigurati
       });
       myPanel = FormBuilder.createFormBuilder()
             .addLabeledComponent("Clean Data on every Run", cleanDataField)
-            .addLabeledComponent("Artemis UserName", artemisUserNameField)
+            .addLabeledComponent("Artemis Host Name", artemisHostNameField)
+            .addLabeledComponent("Artemis User Name", artemisUserNameField)
             .addLabeledComponent("Artemis Password", artemisPasswordField)
             .addLabeledComponent("Allow Anonymous", artemisAllowAnonField)
             .addLabeledComponent("Broker Properties", brokerPropertiesField)
@@ -66,6 +69,7 @@ public class ArtemisSettingsEditor  extends SettingsEditor<ArtemisRunConfigurati
    @Override
    protected void resetEditorFrom(ArtemisRunConfiguration runConfiguration) {
       cleanDataField.setSelected(runConfiguration.getCleanData());
+      artemisHostNameField.setText(runConfiguration.getArtemisHostName());
       artemisUserNameField.setText(runConfiguration.getArtemisUserName());
       artemisPasswordField.setText(runConfiguration.getArtemisPassword());
       artemisAllowAnonField.setSelected(runConfiguration.getArtemisAllowAnon());
@@ -78,13 +82,15 @@ public class ArtemisSettingsEditor  extends SettingsEditor<ArtemisRunConfigurati
    @Override
    protected void applyEditorTo(@NotNull ArtemisRunConfiguration artemisRunConfiguration) {
       artemisRunConfiguration.setCleanData(cleanDataField.isSelected());
+      artemisRunConfiguration.setArtemisHostName(artemisHostNameField.getText());
       artemisRunConfiguration.setArtemisUserName(artemisUserNameField.getText());
       artemisRunConfiguration.setArtemisPassword(artemisPasswordField.getText());
       artemisRunConfiguration.setArtemisAllowAnon(artemisAllowAnonField.isSelected());
       artemisRunConfiguration.setBrokerProperties(brokerPropertiesField.getText());
       artemisRunConfiguration.setClustered(clusteredField.isSelected());
       artemisRunConfiguration.setBackup(backupField.isSelected());
-      artemisRunConfiguration.setPortOffset(Integer.valueOf(portOffsetField.getText()));
+      if (portOffsetField.getText() != null && portOffsetField.getText().length() > 0)
+         artemisRunConfiguration.setPortOffset(Integer.valueOf(portOffsetField.getText()));
    }
 
    @NotNull

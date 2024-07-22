@@ -4,6 +4,9 @@ import com.intellij.execution.configurations.RunConfigurationOptions;
 import com.intellij.openapi.components.StoredProperty;
 
 public class ArtemisRunConfigurationOptions extends RunConfigurationOptions {
+
+   private final StoredProperty<String> artemisHostName = string("localhost").provideDelegate(this, "hostName");
+
    private final StoredProperty<Boolean> cleanData = property(true).provideDelegate(this, "cleanData");
 
    private final StoredProperty<String> artemisUserName = string("admin").provideDelegate(this, "artemisUserName");
@@ -20,7 +23,13 @@ public class ArtemisRunConfigurationOptions extends RunConfigurationOptions {
 
    private final StoredProperty<Integer> portOffset = property(0).provideDelegate(this, "portOffset");
 
+   public String getArtemisHostName() {
+      return artemisHostName.getValue(this);
+   }
 
+   public void setArtemisHostName(String host) {
+      artemisHostName.setValue(this, host);
+   }
    public String getArtemisUserName() {
       return artemisUserName.getValue(this);
    }

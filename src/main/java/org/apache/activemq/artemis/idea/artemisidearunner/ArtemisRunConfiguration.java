@@ -26,19 +26,25 @@ public class ArtemisRunConfiguration  extends RunConfigurationBase<ArtemisRunCon
       return (ArtemisRunConfigurationOptions) super.getOptions();
    }
 
-   public String getArtemisUserName() {
-      return getOptions().getArtemisUserName();
-   }
-
    @Override
    public void checkConfiguration() throws RuntimeConfigurationException {
       super.checkConfiguration();
    }
 
+   public String getArtemisHostName() {
+      return getOptions().getArtemisHostName();
+   }
+
+   public void setArtemisHostName(String host) {
+      getOptions().setArtemisHostName(host);
+   }
+   public String getArtemisUserName() {
+      return getOptions().getArtemisUserName();
+   }
+
    public void setArtemisUserName(String username) {
       getOptions().setArtemisUserName(username);
    }
-
 
    public String getArtemisPassword() {
       return getOptions().getArtemisPassword();
