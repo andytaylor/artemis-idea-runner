@@ -1,6 +1,9 @@
 package org.apache.activemq.artemis.idea.artemisidearunner;
 
+import com.intellij.openapi.fileChooser.FileChooserDescriptorFactory;
 import com.intellij.openapi.options.SettingsEditor;
+
+import com.intellij.openapi.ui.TextFieldWithBrowseButton;
 import com.intellij.ui.components.JBCheckBox;
 import com.intellij.ui.components.JBTextArea;
 import com.intellij.ui.components.JBTextField;
@@ -17,6 +20,7 @@ public class ArtemisSettingsEditor  extends SettingsEditor<ArtemisRunConfigurati
    private final JBCheckBox cleanDataField;
 
    private final JBTextField artemisHostNameField;
+
    private final JBTextField artemisUserNameField;
 
    private final JBTextField artemisPasswordField;
@@ -31,6 +35,7 @@ public class ArtemisSettingsEditor  extends SettingsEditor<ArtemisRunConfigurati
 
    private final IntegerField portOffsetField;
 
+   private final TextFieldWithBrowseButton dataDirectoryField;
 
    public ArtemisSettingsEditor() {
       cleanDataField = new JBCheckBox();
@@ -42,6 +47,9 @@ public class ArtemisSettingsEditor  extends SettingsEditor<ArtemisRunConfigurati
       clusteredField = new JBCheckBox();
       backupField = new JBCheckBox();
       portOffsetField = new IntegerField();
+      dataDirectoryField = new TextFieldWithBrowseButton();
+      dataDirectoryField.addBrowseFolderListener("Select Data Directory", null, null,
+            FileChooserDescriptorFactory.createSingleFileDescriptor());
       portOffsetField.setInputVerifier(new InputVerifier() {
          @Override
          public boolean verify(JComponent input) {
@@ -63,6 +71,7 @@ public class ArtemisSettingsEditor  extends SettingsEditor<ArtemisRunConfigurati
             .addLabeledComponent("Clustered", clusteredField)
             .addLabeledComponent("Backup", backupField)
             .addLabeledComponent("Port Offset", portOffsetField)
+            .addLabeledComponent("Data Directory", dataDirectoryField)
             .getPanel();
    }
 
@@ -77,6 +86,7 @@ public class ArtemisSettingsEditor  extends SettingsEditor<ArtemisRunConfigurati
       clusteredField.setSelected(runConfiguration.getClustered());
       backupField.setSelected(runConfiguration.getBackup());
       portOffsetField.setText("" + runConfiguration.getPortOffset());
+      dataDirectoryField.setText(runConfiguration.getDataDirectory());
    }
 
    @Override
@@ -91,6 +101,11 @@ public class ArtemisSettingsEditor  extends SettingsEditor<ArtemisRunConfigurati
       artemisRunConfiguration.setBackup(backupField.isSelected());
       if (portOffsetField.getText() != null && portOffsetField.getText().length() > 0)
          artemisRunConfiguration.setPortOffset(Integer.valueOf(portOffsetField.getText()));
+
+      if (artemisRunConfiguration.getOptions().getModificationCount() > 0) {
+         artemisRunConfiguration.setCreateBroker(true);
+      }
+      artemisRunConfiguration.setDataDirectory(dataDirectoryField.getText());
    }
 
    @NotNull
@@ -98,5 +113,4 @@ public class ArtemisSettingsEditor  extends SettingsEditor<ArtemisRunConfigurati
    protected JComponent createEditor() {
       return myPanel;
    }
-
 }

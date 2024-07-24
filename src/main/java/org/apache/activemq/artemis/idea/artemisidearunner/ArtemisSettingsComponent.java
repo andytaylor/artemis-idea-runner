@@ -1,5 +1,7 @@
 package org.apache.activemq.artemis.idea.artemisidearunner;
 
+import com.intellij.openapi.fileChooser.FileChooserDescriptorFactory;
+import com.intellij.openapi.ui.TextFieldWithBrowseButton;
 import com.intellij.ui.components.JBLabel;
 import com.intellij.ui.components.JBTextField;
 import com.intellij.util.ui.FormBuilder;
@@ -10,11 +12,13 @@ import javax.swing.*;
 public class ArtemisSettingsComponent {
 
    private final JPanel myMainPanel;
-   private final JBTextField amqInstallationDir = new JBTextField();
+   private final TextFieldWithBrowseButton artemisInstallationDir = new TextFieldWithBrowseButton();
 
    public ArtemisSettingsComponent() {
+      artemisInstallationDir.addBrowseFolderListener("Select Artemis Installation Directory", null, null,
+            FileChooserDescriptorFactory.createSingleFileDescriptor());
       myMainPanel = FormBuilder.createFormBuilder()
-            .addLabeledComponent(new JBLabel("AMQ Installation Directory:"), amqInstallationDir, 1, false)
+            .addLabeledComponent(new JBLabel("AMQ Installation Directory:"), artemisInstallationDir, 1, false)
             .addComponentFillVertically(new JPanel(), 0)
             .getPanel();
    }
@@ -24,16 +28,16 @@ public class ArtemisSettingsComponent {
    }
 
    public JComponent getPreferredFocusedComponent() {
-      return amqInstallationDir;
+      return artemisInstallationDir;
    }
 
    @NotNull
    public String getAmqInstallationDir() {
-      return amqInstallationDir.getText();
+      return artemisInstallationDir.getText();
    }
 
    public void setAmqInstallationDir(@NotNull String installationDir) {
-      amqInstallationDir.setText(installationDir);
+      artemisInstallationDir.setText(installationDir);
    }
 
 

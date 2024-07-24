@@ -51,34 +51,7 @@ class ArtemisCommandLineState extends CommandLineState {
             throw new ExecutionException(e);
          }
       }
-      StringBuilder sb = new StringBuilder();
 
-      sb.append(state.amqInstallationDir + "/bin/artemis ")
-            .append("create ")
-            .append("--host").append(" ")
-            .append(artemisRunConfiguration.getArtemisHostName()).append(" ")
-            .append(getEscapedName()).append(" ")
-            .append("--user").append(" ")
-            .append(artemisRunConfiguration.getArtemisUserName()).append(" ")
-            .append("--password ")
-            .append(artemisRunConfiguration.getArtemisPassword()).append(" ");
-
-      if (artemisRunConfiguration.getArtemisAllowAnon()) {
-         sb.append("--allow-anonymous ");
-      } else {
-         sb.append("--require-login ");
-      }
-      if(artemisRunConfiguration.getClustered()) {
-         sb.append("--clustered ");
-         sb.append("--cluster-user ").append(artemisRunConfiguration.getArtemisUserName()).append(" ");
-         sb.append(("--cluster-password ")).append(artemisRunConfiguration.getArtemisPassword()).append(" ");
-      }
-      if(artemisRunConfiguration.getBackup()) {
-         sb.append("--backup ");
-      }
-      if(artemisRunConfiguration.getPortOffset() > 0) {
-         sb.append("--port-offset " + artemisRunConfiguration.getPortOffset()).append(" ");
-      }
       if (artemisInstanceDir.exists() && artemisRunConfiguration.getCleanData()) {
 
          Path dir = Paths.get(artemisInstanceDir.getPath()); //path to the directory
@@ -96,10 +69,47 @@ class ArtemisCommandLineState extends CommandLineState {
          } catch (IOException e) {
             throw new RuntimeException(e);
          }
-      } else {
-         sb.append(" --force");
       }
-      sb.append(System.lineSeparator());
+
+      StringBuilder sb = new StringBuilder();
+      if (!artemisInstanceDir.exists() || artemisRunConfiguration.getCreateBroker()) {
+         sb.append(state.amqInstallationDir + "/bin/artemis ")
+               .append("create ")
+               .append("--host").append(" ")
+               .append(artemisRunConfiguration.getArtemisHostName()).append(" ")
+               .append(getEscapedName()).append(" ")
+               .append("--user").append(" ")
+               .append(artemisRunConfiguration.getArtemisUserName()).append(" ")
+               .append("--password ")
+               .append(artemisRunConfiguration.getArtemisPassword()).append(" ");
+
+         if (artemisRunConfiguration.getArtemisAllowAnon()) {
+            sb.append("--allow-anonymous ");
+         } else {
+            sb.append("--require-login ");
+         }
+         if (artemisRunConfiguration.getClustered()) {
+            sb.append("--clustered ");
+            sb.append("--cluster-user ").append(artemisRunConfiguration.getArtemisUserName()).append(" ");
+            sb.append(("--cluster-password ")).append(artemisRunConfiguration.getArtemisPassword()).append(" ");
+         }
+         if (artemisRunConfiguration.getBackup()) {
+            sb.append("--backup ");
+         }
+         if (artemisRunConfiguration.getPortOffset() > 0) {
+            sb.append("--port-offset " + artemisRunConfiguration.getPortOffset()).append(" ");
+         }
+         artemisRunConfiguration.setCreateBroker(false);
+
+         if(artemisRunConfiguration.getDataDirectory() != null && artemisRunConfiguration.getDataDirectory().length() >0) {
+            sb.append("--data ").append(artemisRunConfiguration.getDataDirectory()).append(" ");
+         }
+
+         if (artemisInstanceDir.exists()) {
+            sb.append(" --force");
+         }
+         sb.append(System.lineSeparator());
+      }
 
       sb.append("echo -e '" + artemisRunConfiguration.getBrokerProperties() + "' > " + artemisInstanceDir + "/etc/broker.properties");
       sb.append(System.lineSeparator());

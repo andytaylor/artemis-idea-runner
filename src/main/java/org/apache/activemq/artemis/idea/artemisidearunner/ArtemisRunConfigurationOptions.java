@@ -23,6 +23,8 @@ public class ArtemisRunConfigurationOptions extends RunConfigurationOptions {
 
    private final StoredProperty<Integer> portOffset = property(0).provideDelegate(this, "portOffset");
 
+   private final StoredProperty<String> dataDirectory = string("").provideDelegate(this, "dataDirectory");
+
    public String getArtemisHostName() {
       return artemisHostName.getValue(this);
    }
@@ -30,6 +32,7 @@ public class ArtemisRunConfigurationOptions extends RunConfigurationOptions {
    public void setArtemisHostName(String host) {
       artemisHostName.setValue(this, host);
    }
+
    public String getArtemisUserName() {
       return artemisUserName.getValue(this);
    }
@@ -98,5 +101,11 @@ public class ArtemisRunConfigurationOptions extends RunConfigurationOptions {
       portOffset.setValue(this, offset);
    }
 
+   public String getDataDirectory() {
+      return dataDirectory.getValue(this);
+   }
 
+   public void setDataDirectory(String dir) {
+      dataDirectory.setValue(this, dir);
+   }
 }

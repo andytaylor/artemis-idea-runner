@@ -14,6 +14,8 @@ import org.jetbrains.annotations.NotNull;
 
 public class ArtemisRunConfiguration  extends RunConfigurationBase<ArtemisRunConfigurationOptions> {
 
+   private boolean createBroker = true;
+
    protected ArtemisRunConfiguration(Project project,
                                      ConfigurationFactory factory,
                                      String name) {
@@ -38,6 +40,7 @@ public class ArtemisRunConfiguration  extends RunConfigurationBase<ArtemisRunCon
    public void setArtemisHostName(String host) {
       getOptions().setArtemisHostName(host);
    }
+
    public String getArtemisUserName() {
       return getOptions().getArtemisUserName();
    }
@@ -63,7 +66,6 @@ public class ArtemisRunConfiguration  extends RunConfigurationBase<ArtemisRunCon
       getOptions().setArtemisAllowAnon(allowAnon);
    }
 
-
    public Boolean getCleanData() {
       return getOptions().getCleanData();
    }
@@ -79,6 +81,7 @@ public class ArtemisRunConfiguration  extends RunConfigurationBase<ArtemisRunCon
    public void setClustered(Boolean clustered) {
       getOptions().setClustered(clustered);
    }
+
    public Boolean getBackup() {
       return getOptions().getBackup();
    }
@@ -103,7 +106,6 @@ public class ArtemisRunConfiguration  extends RunConfigurationBase<ArtemisRunCon
       getOptions().setPortOffset(offset);
    }
 
-
    @NotNull
    @Override
    public SettingsEditor<? extends RunConfiguration> getConfigurationEditor() {
@@ -117,4 +119,19 @@ public class ArtemisRunConfiguration  extends RunConfigurationBase<ArtemisRunCon
       return new ArtemisCommandLineState(this, environment);
    }
 
+   public void setCreateBroker(boolean createBroker) {
+      this.createBroker = createBroker;
+   }
+
+   public boolean getCreateBroker() {
+      return createBroker;
+   }
+
+   public String getDataDirectory() {
+      return getOptions().getDataDirectory();
+   }
+
+   public void setDataDirectory(String dir) {
+      getOptions().setDataDirectory(dir);
+   }
 }
