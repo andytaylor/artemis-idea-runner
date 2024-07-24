@@ -3,6 +3,7 @@ package org.apache.activemq.artemis.idea.artemisidearunner;
 import com.intellij.openapi.fileChooser.FileChooserDescriptorFactory;
 import com.intellij.openapi.options.SettingsEditor;
 
+import com.intellij.openapi.ui.ComboBox;
 import com.intellij.openapi.ui.TextFieldWithBrowseButton;
 import com.intellij.ui.components.JBCheckBox;
 import com.intellij.ui.components.JBTextArea;
@@ -33,6 +34,8 @@ public class ArtemisSettingsEditor  extends SettingsEditor<ArtemisRunConfigurati
 
    private final JBCheckBox backupField;
 
+   private final ComboBox<String> haTypeField;
+
    private final IntegerField portOffsetField;
 
    private final TextFieldWithBrowseButton dataDirectoryField;
@@ -46,6 +49,7 @@ public class ArtemisSettingsEditor  extends SettingsEditor<ArtemisRunConfigurati
       brokerPropertiesField = new JBTextArea();
       clusteredField = new JBCheckBox();
       backupField = new JBCheckBox();
+      haTypeField = new ComboBox<>(new String[]{"None", "Shared Store", "Replicated"});
       portOffsetField = new IntegerField();
       dataDirectoryField = new TextFieldWithBrowseButton();
       dataDirectoryField.addBrowseFolderListener("Select Data Directory", null, null,
@@ -70,6 +74,7 @@ public class ArtemisSettingsEditor  extends SettingsEditor<ArtemisRunConfigurati
             .addLabeledComponent("Broker Properties", brokerPropertiesField)
             .addLabeledComponent("Clustered", clusteredField)
             .addLabeledComponent("Backup", backupField)
+            .addLabeledComponent("HA Type", haTypeField)
             .addLabeledComponent("Port Offset", portOffsetField)
             .addLabeledComponent("Data Directory", dataDirectoryField)
             .getPanel();
@@ -85,6 +90,7 @@ public class ArtemisSettingsEditor  extends SettingsEditor<ArtemisRunConfigurati
       brokerPropertiesField.setText(runConfiguration.getBrokerProperties());
       clusteredField.setSelected(runConfiguration.getClustered());
       backupField.setSelected(runConfiguration.getBackup());
+      haTypeField.setItem(runConfiguration.getHAType());
       portOffsetField.setText("" + runConfiguration.getPortOffset());
       dataDirectoryField.setText(runConfiguration.getDataDirectory());
    }
@@ -99,6 +105,7 @@ public class ArtemisSettingsEditor  extends SettingsEditor<ArtemisRunConfigurati
       artemisRunConfiguration.setBrokerProperties(brokerPropertiesField.getText());
       artemisRunConfiguration.setClustered(clusteredField.isSelected());
       artemisRunConfiguration.setBackup(backupField.isSelected());
+      artemisRunConfiguration.setHAType(haTypeField.getItem());
       if (portOffsetField.getText() != null && portOffsetField.getText().length() > 0)
          artemisRunConfiguration.setPortOffset(Integer.valueOf(portOffsetField.getText()));
 

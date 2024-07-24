@@ -134,4 +134,12 @@ public class ArtemisRunConfiguration  extends RunConfigurationBase<ArtemisRunCon
    public void setDataDirectory(String dir) {
       getOptions().setDataDirectory(dir);
    }
+
+   public String getHAType() {
+      return getOptions().getHAType();
+   }
+
+   public void setHAType(String haType) {
+      getOptions().setHAType(haType);
+   }
 }

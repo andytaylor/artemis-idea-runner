@@ -105,6 +105,14 @@ class ArtemisCommandLineState extends CommandLineState {
             sb.append("--data ").append(artemisRunConfiguration.getDataDirectory()).append(" ");
          }
 
+         if(artemisRunConfiguration.getHAType() != null && artemisRunConfiguration.getHAType().equals("Shared Store")) {
+            sb.append("--shared-store ");
+         }
+
+         if(artemisRunConfiguration.getHAType() != null && artemisRunConfiguration.getHAType().equals("Replicated")) {
+            sb.append("--replicated ");
+         }
+
          if (artemisInstanceDir.exists()) {
             sb.append(" --force");
          }

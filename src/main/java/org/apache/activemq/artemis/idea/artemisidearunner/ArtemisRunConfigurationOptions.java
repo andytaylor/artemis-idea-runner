@@ -21,6 +21,8 @@ public class ArtemisRunConfigurationOptions extends RunConfigurationOptions {
 
    private final StoredProperty<Boolean> backup = property(false).provideDelegate(this, "backup");
 
+   private final StoredProperty<String> HAType = string("None").provideDelegate(this, "HAType");
+
    private final StoredProperty<Integer> portOffset = property(0).provideDelegate(this, "portOffset");
 
    private final StoredProperty<String> dataDirectory = string("").provideDelegate(this, "dataDirectory");
@@ -107,5 +109,13 @@ public class ArtemisRunConfigurationOptions extends RunConfigurationOptions {
 
    public void setDataDirectory(String dir) {
       dataDirectory.setValue(this, dir);
+   }
+
+   public String getHAType() {
+      return HAType.getValue(this);
+   }
+
+   public void setHAType(String haType) {
+      HAType.setValue(this, haType);
    }
 }
