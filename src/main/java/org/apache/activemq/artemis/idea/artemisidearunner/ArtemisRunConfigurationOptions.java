@@ -27,6 +27,8 @@ public class ArtemisRunConfigurationOptions extends RunConfigurationOptions {
 
    private final StoredProperty<String> dataDirectory = string("").provideDelegate(this, "dataDirectory");
 
+   private final StoredProperty<String> extraLibDirectory =  string("").provideDelegate(this, "extraLibDirectory");
+
    public String getArtemisHostName() {
       return artemisHostName.getValue(this);
    }
@@ -117,5 +119,13 @@ public class ArtemisRunConfigurationOptions extends RunConfigurationOptions {
 
    public void setHAType(String haType) {
       HAType.setValue(this, haType);
+   }
+
+   public String getExtraLibDirectory() {
+      return extraLibDirectory.getValue(this);
+   }
+
+   public void setExtraLibDirectory(String extraLibDirectory) {
+      this.extraLibDirectory.setValue(this, extraLibDirectory);
    }
 }

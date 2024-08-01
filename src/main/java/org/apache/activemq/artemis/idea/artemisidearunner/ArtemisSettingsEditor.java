@@ -40,6 +40,9 @@ public class ArtemisSettingsEditor  extends SettingsEditor<ArtemisRunConfigurati
 
    private final TextFieldWithBrowseButton dataDirectoryField;
 
+   private final TextFieldWithBrowseButton extraDirectoryField;
+
+
    public ArtemisSettingsEditor() {
       cleanDataField = new JBCheckBox();
       artemisHostNameField = new JBTextField();
@@ -53,6 +56,9 @@ public class ArtemisSettingsEditor  extends SettingsEditor<ArtemisRunConfigurati
       portOffsetField = new IntegerField();
       dataDirectoryField = new TextFieldWithBrowseButton();
       dataDirectoryField.addBrowseFolderListener("Select Data Directory", null, null,
+            FileChooserDescriptorFactory.createSingleFileDescriptor());
+      extraDirectoryField = new TextFieldWithBrowseButton();
+      extraDirectoryField.addBrowseFolderListener("Select Extra Lib Directory", null, null,
             FileChooserDescriptorFactory.createSingleFileDescriptor());
       portOffsetField.setInputVerifier(new InputVerifier() {
          @Override
@@ -77,6 +83,7 @@ public class ArtemisSettingsEditor  extends SettingsEditor<ArtemisRunConfigurati
             .addLabeledComponent("HA Type", haTypeField)
             .addLabeledComponent("Port Offset", portOffsetField)
             .addLabeledComponent("Data Directory", dataDirectoryField)
+            .addLabeledComponent("Extra Lib Directory", extraDirectoryField)
             .getPanel();
    }
 
@@ -93,6 +100,7 @@ public class ArtemisSettingsEditor  extends SettingsEditor<ArtemisRunConfigurati
       haTypeField.setItem(runConfiguration.getHAType());
       portOffsetField.setText("" + runConfiguration.getPortOffset());
       dataDirectoryField.setText(runConfiguration.getDataDirectory());
+      extraDirectoryField.setText(runConfiguration.getExtraLibDirectory());
    }
 
    @Override
@@ -113,6 +121,7 @@ public class ArtemisSettingsEditor  extends SettingsEditor<ArtemisRunConfigurati
          artemisRunConfiguration.setCreateBroker(true);
       }
       artemisRunConfiguration.setDataDirectory(dataDirectoryField.getText());
+      artemisRunConfiguration.setExtralibDirectory(extraDirectoryField.getText());
    }
 
    @NotNull

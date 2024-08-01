@@ -142,4 +142,12 @@ public class ArtemisRunConfiguration  extends RunConfigurationBase<ArtemisRunCon
    public void setHAType(String haType) {
       getOptions().setHAType(haType);
    }
+
+   public String getExtraLibDirectory() {
+      return getOptions().getExtraLibDirectory();
+   }
+
+   public void setExtralibDirectory(String extraLibDirectory) {
+      getOptions().setExtraLibDirectory(extraLibDirectory);
+   }
 }

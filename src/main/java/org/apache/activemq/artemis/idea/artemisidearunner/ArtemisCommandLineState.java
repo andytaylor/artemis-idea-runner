@@ -122,6 +122,10 @@ class ArtemisCommandLineState extends CommandLineState {
       sb.append("echo -e '" + artemisRunConfiguration.getBrokerProperties() + "' > " + artemisInstanceDir + "/etc/broker.properties");
       sb.append(System.lineSeparator());
 
+      if (artemisRunConfiguration.getExtraLibDirectory() != null && artemisRunConfiguration.getExtraLibDirectory().length() > 0) {
+         sb.append("cp ").append(artemisRunConfiguration.getExtraLibDirectory()).append("/* ").append(artemisInstanceDir).append("/lib").append(System.lineSeparator());
+      }
+
       sb.append(artemisInstanceDir.getAbsolutePath() + "/bin/artemis run");
 
       try {
