@@ -150,4 +150,12 @@ public class ArtemisRunConfiguration  extends RunConfigurationBase<ArtemisRunCon
    public void setExtralibDirectory(String extraLibDirectory) {
       getOptions().setExtraLibDirectory(extraLibDirectory);
    }
+
+   public String getBootstrapXML() {
+      return getOptions().getBootstrapXML();
+   }
+
+   public void setBootstrapXML(String bootstrapXML) {
+      getOptions().setBootstrapXML(bootstrapXML);
+   }
 }

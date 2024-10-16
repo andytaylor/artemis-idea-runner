@@ -42,6 +42,8 @@ public class ArtemisSettingsEditor  extends SettingsEditor<ArtemisRunConfigurati
 
    private final TextFieldWithBrowseButton extraDirectoryField;
 
+   private final JBTextArea bootstrapXMLField;
+
 
    public ArtemisSettingsEditor() {
       cleanDataField = new JBCheckBox();
@@ -71,6 +73,7 @@ public class ArtemisSettingsEditor  extends SettingsEditor<ArtemisRunConfigurati
             }
          }
       });
+      bootstrapXMLField = new JBTextArea();
       myPanel = FormBuilder.createFormBuilder()
             .addLabeledComponent("Clean Data on every Run", cleanDataField)
             .addLabeledComponent("Artemis Host Name", artemisHostNameField)
@@ -84,6 +87,7 @@ public class ArtemisSettingsEditor  extends SettingsEditor<ArtemisRunConfigurati
             .addLabeledComponent("Port Offset", portOffsetField)
             .addLabeledComponent("Data Directory", dataDirectoryField)
             .addLabeledComponent("Extra Lib Directory", extraDirectoryField)
+            .addLabeledComponent("bootstrap.xml", bootstrapXMLField)
             .getPanel();
    }
 
@@ -101,6 +105,7 @@ public class ArtemisSettingsEditor  extends SettingsEditor<ArtemisRunConfigurati
       portOffsetField.setText("" + runConfiguration.getPortOffset());
       dataDirectoryField.setText(runConfiguration.getDataDirectory());
       extraDirectoryField.setText(runConfiguration.getExtraLibDirectory());
+      bootstrapXMLField.setText(runConfiguration.getBootstrapXML());
    }
 
    @Override
@@ -122,6 +127,7 @@ public class ArtemisSettingsEditor  extends SettingsEditor<ArtemisRunConfigurati
       }
       artemisRunConfiguration.setDataDirectory(dataDirectoryField.getText());
       artemisRunConfiguration.setExtralibDirectory(extraDirectoryField.getText());
+      artemisRunConfiguration.setBootstrapXML((bootstrapXMLField.getText()));
    }
 
    @NotNull

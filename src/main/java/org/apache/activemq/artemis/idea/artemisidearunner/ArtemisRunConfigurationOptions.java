@@ -29,6 +29,9 @@ public class ArtemisRunConfigurationOptions extends RunConfigurationOptions {
 
    private final StoredProperty<String> extraLibDirectory =  string("").provideDelegate(this, "extraLibDirectory");
 
+   private final StoredProperty<String> bootstrapXML = string("").provideDelegate(this, "bootstrapXML");
+
+
    public String getArtemisHostName() {
       return artemisHostName.getValue(this);
    }
@@ -127,5 +130,13 @@ public class ArtemisRunConfigurationOptions extends RunConfigurationOptions {
 
    public void setExtraLibDirectory(String extraLibDirectory) {
       this.extraLibDirectory.setValue(this, extraLibDirectory);
+   }
+
+   public String getBootstrapXML() {
+      return bootstrapXML.getValue(this);
+   }
+
+   public void setBootstrapXML(String bootstrapXML) {
+      this.bootstrapXML.setValue(this, bootstrapXML);
    }
 }
