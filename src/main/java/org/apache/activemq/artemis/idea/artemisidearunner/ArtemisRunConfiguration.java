@@ -158,4 +158,20 @@ public class ArtemisRunConfiguration  extends RunConfigurationBase<ArtemisRunCon
    public void setBootstrapXML(String bootstrapXML) {
       getOptions().setBootstrapXML(bootstrapXML);
    }
+
+   public String getJavaOptions() {
+      return getOptions().getJavaOptions();
+   }
+
+   public void setJavaOptions(String javaOptions) {
+      getOptions().setJavaOptions(javaOptions);
+   }
+
+   public Boolean getNoWeb() {
+      return getOptions().getNoWeb();
+   }
+
+   public void setNoWeb(Boolean noWeb) {
+      getOptions().setNoWeb(noWeb);
+   }
 }

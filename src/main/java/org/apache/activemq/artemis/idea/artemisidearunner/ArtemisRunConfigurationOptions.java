@@ -21,6 +21,8 @@ public class ArtemisRunConfigurationOptions extends RunConfigurationOptions {
 
    private final StoredProperty<Boolean> backup = property(false).provideDelegate(this, "backup");
 
+   private final StoredProperty<Boolean> noWeb = property(false).provideDelegate(this, "noWeb");
+
    private final StoredProperty<String> HAType = string("None").provideDelegate(this, "HAType");
 
    private final StoredProperty<Integer> portOffset = property(0).provideDelegate(this, "portOffset");
@@ -28,6 +30,8 @@ public class ArtemisRunConfigurationOptions extends RunConfigurationOptions {
    private final StoredProperty<String> dataDirectory = string("").provideDelegate(this, "dataDirectory");
 
    private final StoredProperty<String> extraLibDirectory =  string("").provideDelegate(this, "extraLibDirectory");
+
+   private final StoredProperty<String> javaOptions =  string("").provideDelegate(this, "javaOptions");
 
    private final StoredProperty<String> bootstrapXML = string("").provideDelegate(this, "bootstrapXML");
 
@@ -138,5 +142,21 @@ public class ArtemisRunConfigurationOptions extends RunConfigurationOptions {
 
    public void setBootstrapXML(String bootstrapXML) {
       this.bootstrapXML.setValue(this, bootstrapXML);
+   }
+
+   public String getJavaOptions() {
+      return javaOptions.getValue(this);
+   }
+
+   public void setJavaOptions(String javaOptions) {
+      this.javaOptions.setValue(this, javaOptions);
+   }
+
+   public Boolean getNoWeb() {
+      return noWeb.getValue(this);
+   }
+
+   public void setNoWeb(Boolean noWeb) {
+      this.noWeb.setValue(this, noWeb);
    }
 }

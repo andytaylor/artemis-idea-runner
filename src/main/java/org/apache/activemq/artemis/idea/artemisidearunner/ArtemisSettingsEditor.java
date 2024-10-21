@@ -34,6 +34,8 @@ public class ArtemisSettingsEditor  extends SettingsEditor<ArtemisRunConfigurati
 
    private final JBCheckBox backupField;
 
+   private final JBCheckBox noWebField;
+
    private final ComboBox<String> haTypeField;
 
    private final IntegerField portOffsetField;
@@ -43,6 +45,8 @@ public class ArtemisSettingsEditor  extends SettingsEditor<ArtemisRunConfigurati
    private final TextFieldWithBrowseButton extraDirectoryField;
 
    private final JBTextArea bootstrapXMLField;
+
+   private final JBTextField javaOptionsField;
 
 
    public ArtemisSettingsEditor() {
@@ -54,6 +58,7 @@ public class ArtemisSettingsEditor  extends SettingsEditor<ArtemisRunConfigurati
       brokerPropertiesField = new JBTextArea();
       clusteredField = new JBCheckBox();
       backupField = new JBCheckBox();
+      noWebField = new JBCheckBox();
       haTypeField = new ComboBox<>(new String[]{"None", "Shared Store", "Replicated"});
       portOffsetField = new IntegerField();
       dataDirectoryField = new TextFieldWithBrowseButton();
@@ -73,6 +78,7 @@ public class ArtemisSettingsEditor  extends SettingsEditor<ArtemisRunConfigurati
             }
          }
       });
+      javaOptionsField = new JBTextField();
       bootstrapXMLField = new JBTextArea();
       myPanel = FormBuilder.createFormBuilder()
             .addLabeledComponent("Clean Data on every Run", cleanDataField)
@@ -83,10 +89,12 @@ public class ArtemisSettingsEditor  extends SettingsEditor<ArtemisRunConfigurati
             .addLabeledComponent("Broker Properties", brokerPropertiesField)
             .addLabeledComponent("Clustered", clusteredField)
             .addLabeledComponent("Backup", backupField)
+            .addLabeledComponent("No Web", noWebField)
             .addLabeledComponent("HA Type", haTypeField)
             .addLabeledComponent("Port Offset", portOffsetField)
             .addLabeledComponent("Data Directory", dataDirectoryField)
             .addLabeledComponent("Extra Lib Directory", extraDirectoryField)
+            .addLabeledComponent("Java Options", javaOptionsField)
             .addLabeledComponent("bootstrap.xml", bootstrapXMLField)
             .getPanel();
    }
@@ -101,10 +109,12 @@ public class ArtemisSettingsEditor  extends SettingsEditor<ArtemisRunConfigurati
       brokerPropertiesField.setText(runConfiguration.getBrokerProperties());
       clusteredField.setSelected(runConfiguration.getClustered());
       backupField.setSelected(runConfiguration.getBackup());
+      noWebField.setSelected(runConfiguration.getNoWeb());
       haTypeField.setItem(runConfiguration.getHAType());
       portOffsetField.setText("" + runConfiguration.getPortOffset());
       dataDirectoryField.setText(runConfiguration.getDataDirectory());
       extraDirectoryField.setText(runConfiguration.getExtraLibDirectory());
+      javaOptionsField.setText(runConfiguration.getJavaOptions());
       bootstrapXMLField.setText(runConfiguration.getBootstrapXML());
    }
 
@@ -118,6 +128,7 @@ public class ArtemisSettingsEditor  extends SettingsEditor<ArtemisRunConfigurati
       artemisRunConfiguration.setBrokerProperties(brokerPropertiesField.getText());
       artemisRunConfiguration.setClustered(clusteredField.isSelected());
       artemisRunConfiguration.setBackup(backupField.isSelected());
+      artemisRunConfiguration.setNoWeb(noWebField.isSelected());
       artemisRunConfiguration.setHAType(haTypeField.getItem());
       if (portOffsetField.getText() != null && portOffsetField.getText().length() > 0)
          artemisRunConfiguration.setPortOffset(Integer.valueOf(portOffsetField.getText()));
@@ -127,6 +138,7 @@ public class ArtemisSettingsEditor  extends SettingsEditor<ArtemisRunConfigurati
       }
       artemisRunConfiguration.setDataDirectory(dataDirectoryField.getText());
       artemisRunConfiguration.setExtralibDirectory(extraDirectoryField.getText());
+      artemisRunConfiguration.setJavaOptions(javaOptionsField.getText());
       artemisRunConfiguration.setBootstrapXML((bootstrapXMLField.getText()));
    }
 

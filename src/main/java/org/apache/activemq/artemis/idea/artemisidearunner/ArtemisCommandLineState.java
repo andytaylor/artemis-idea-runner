@@ -113,6 +113,13 @@ class ArtemisCommandLineState extends CommandLineState {
             sb.append("--replicated ");
          }
 
+         if(artemisRunConfiguration.getJavaOptions() != null && artemisRunConfiguration.getJavaOptions().length() > 0) {
+            sb.append("--java-options ").append(artemisRunConfiguration.getJavaOptions()).append(" ");
+         }
+
+         if(artemisRunConfiguration.getNoWeb()) {
+            sb.append("--no-web ");
+         }
          if (artemisInstanceDir.exists()) {
             sb.append(" --force");
          }
